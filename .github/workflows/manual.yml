@@ -24,5 +24,6 @@ jobs:
         else
           echo "The secret does not match the string. $TEST_SECRET"
         fi
+        echo "The secret length: ${#TEST_SECRET}"
       env:
         TEST_SECRET: ${{ secrets.TEST }}

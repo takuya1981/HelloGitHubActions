@@ -19,9 +19,9 @@ jobs:
     - name: Compare Secret with String
       run: |
         if [ "$TEST_SECRET" == "TESTDEV" ]; then
-          echo "The secret matches the string."
+          echo "The secret matches the string. $TEST_SECRET"
         else
-          echo "The secret does not match the string."
+          echo "The secret does not match the string. $TEST_SECRET"
         fi
       env:
         TEST_SECRET: ${{ secrets.TEST }}

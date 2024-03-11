@@ -19,7 +19,7 @@ jobs:
     steps:
     - name: Compare Secret with String
       run: |
-        if [ "$TEST_SECRET" == "TESTDEV" ]; then
+        if [ "$TEST_SECRET" = "TESTDEV" ]; then
           echo "The secret matches the string. $TEST_SECRET"
         else
           echo "The secret does not match the string. $TEST_SECRET"

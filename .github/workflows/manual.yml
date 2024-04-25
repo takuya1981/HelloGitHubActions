@@ -11,17 +11,29 @@ on:
 jobs:
   prepare:
     runs-on: ubuntu-latest
-
+    
+    steps:
+    - name: echo
+      run: echo "Prepare"
+      
   approve1:
     runs-on: ubuntu-latest
     needs: prepare
     environment: "0001"
-
+    
+    steps:
+    - name: echo
+      run: echo "Approve1"
+      
   approve2:
     runs-on: ubuntu-latest
     needs: prepare
     environment: "0002"
-
+    
+    steps:
+    - name: echo
+      run: echo "Approve2"
+      
   wait-approval:
     runs-on: ubuntu-latest
     needs: [approve1, approve2]

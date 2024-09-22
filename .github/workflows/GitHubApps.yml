@@ -16,3 +16,14 @@ jobs:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           gh api octocat
+          
+      - name: Check GitHub Token Scopes
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          # GitHub APIを呼び出して、レスポンスヘッダーからスコープを取得
+          response=$(curl -I -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/)
+          
+          # X-OAuth-Scopesヘッダーからトークンスコープを抽出して表示
+          echo "Token Scopes:"
+          echo "$response" | grep 'X-OAuth-Scopes' || echo "No scopes found"

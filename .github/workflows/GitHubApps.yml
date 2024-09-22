@@ -52,4 +52,4 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           # GitHub APIでEnvironmentを作成
-          echo '{"wait_timer:43200", "prevent_self_review":false}' | gh api -method PUT /repos/${REPO}/environments/${ENV_NAME} --input -
+          echo '{"wait_timer:43200", "prevent_self_review":false}' | gh api --method PUT /repos/${REPO}/environments/${ENV_NAME} --input -

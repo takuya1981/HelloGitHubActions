@@ -48,7 +48,7 @@ jobs:
       - name: Create GitHub Environment
         env:
           REPO: ${{ github.repository }}  # 現在のリポジトリ
-          ENV_NAME: "sample_environment"          # 作成するEnvironmentの名前を指定
+          ENV_NAME: sample_environment          # 作成するEnvironmentの名前を指定
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           # GitHub APIでEnvironmentを作成

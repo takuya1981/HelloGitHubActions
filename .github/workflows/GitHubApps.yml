@@ -27,3 +27,19 @@ jobs:
           # X-OAuth-Scopesヘッダーからトークンスコープを抽出して表示
           echo "Token Scopes:"
           echo "$response" | grep 'X-OAuth-Scopes' || echo "No scopes found"
+
+      - name: List teams in organization
+        env:
+          ORG_NAME: openssl # GitHubの組織名を設定
+        run: |
+          # シェルスクリプトを直接記載してもOKですが、ファイルとして用意した方が管理がしやすいです
+          # ./list_teams.sh
+          response=$(gh api /orgs/$ORG_NAME/teams 2>&1) || echo "Error: Failed to retrieve teams for organization $ORG_NAME"
+          
+          if [[ -z "$response" ]]; then
+            echo "Error: No response received from GitHub API"
+            exit 1
+          fi
+
+          echo "Teams in organization $ORG_NAME:"
+          echo "$response" | jq -r '.[].name' || echo "Error: Failed to parse the JSON response"

@@ -52,9 +52,4 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           # GitHub APIでEnvironmentを作成
-          gh api \
-            -X PUT \
-            -H "Accept: application/vnd.github+json" \
-            "/repos/${REPO}/environments/${ENV_NAME}" \
-            -F "wait_timer=43200" \
-            -F "deployment_branch_policy={\"protected_branches\": false, \"custom_branch_policies\": false}" || echo "Error: Failed to create or update environment"
+          echo '{"wait_timer:43200", "prevent_self_review":false} | gh api -method PUT /repos/${REPO}/environments/${ENV_NAME}  --input -

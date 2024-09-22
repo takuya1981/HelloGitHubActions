@@ -30,6 +30,7 @@ jobs:
 
       - name: List teams in organization
         env:
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
           ORG_NAME: openssl # GitHubの組織名を設定
         run: |
           # シェルスクリプトを直接記載してもOKですが、ファイルとして用意した方が管理がしやすいです
@@ -43,3 +44,17 @@ jobs:
 
           echo "Teams in organization $ORG_NAME:"
           echo "$response" | jq -r '.[].name' || echo "Error: Failed to parse the JSON response"
+
+      - name: Create GitHub Environment
+        env:
+          REPO: ${{ github.repository }}  # 現在のリポジトリ
+          ENV_NAME: "sample_environment"          # 作成するEnvironmentの名前を指定
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          # GitHub APIでEnvironmentを作成
+          gh api \
+            -X PUT \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/${REPO}/environments/${ENV_NAME}" \
+            -F "wait_timer=43200" \
+            -F "deployment_branch_policy={\"protected_branches\": false, \"custom_branch_policies\": false}" || echo "Error: Failed to create or update environment"
